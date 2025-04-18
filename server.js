@@ -34,9 +34,7 @@ const io = new Server(server, {
   maxHttpBufferSize: 1e8 // Increase buffer size for larger messages
 });
 
-socket.on('disconnect', (reason) => {
-    console.log(`Client ${socket.id} disconnected. Reason: ${reason}`);
-  });
+
 
 // Initialize Gemini API
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -157,6 +155,10 @@ io.on('connection', (socket) => {
       userName, 
       users: room.users 
     });
+
+    socket.on('disconnect', (reason) => {
+        console.log(`Client ${socket.id} disconnected. Reason: ${reason}`);
+      });
     
     logWithTimestamp(`User ${userName} joined room ${roomCode}. Total users: ${room.users.length}`);
   });
