@@ -21,12 +21,22 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
     credentials: true
   },
+
+  
   transports: ['websocket', 'polling'], // Prioritize WebSocket
-  pingTimeout: 60000, // Increase ping timeout to 60 seconds
-  pingInterval: 25000, // More frequent pings to detect disconnections earlier
+  allowEIO3: true,
+  pingTimeout: 60000,
+  pingInterval: 25000,
+  path: '/socket.io',
+  // This helps with proxy environments
+  cookie: false, // Increase ping timeout to 60 seconds // More frequent pings to detect disconnections earlier
   connectTimeout: 30000, // Longer connect timeout
   maxHttpBufferSize: 1e8 // Increase buffer size for larger messages
 });
+
+socket.on('disconnect', (reason) => {
+    console.log(`Client ${socket.id} disconnected. Reason: ${reason}`);
+  });
 
 // Initialize Gemini API
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
