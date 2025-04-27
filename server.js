@@ -60,7 +60,7 @@ async function translateText(text, fromLang, toLang) {
   
   while (retries < maxRetries) {
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       
       const prompt = `Translate the following text from ${fromLang} to ${toLang}. 
       Return only the translated text without any explanations:
